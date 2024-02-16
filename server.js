@@ -3,6 +3,7 @@ import "dotenv/config";
 import cors from "cors";
 import cookieParser from "cookie-parser";
 import dbconnect from "./src/config/db.js";
+import { eventRouter } from "./src/routes/eventRouter.js";
 
 
 const app = express();
@@ -20,6 +21,7 @@ app.use(cookieParser());
 app.use(express.static("public"));
 dbconnect();
 
+app.use("/event", eventRouter);
 
 
 app.get('/user/logout', (req, res)=>{
