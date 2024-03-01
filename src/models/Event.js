@@ -2,17 +2,29 @@ import mongoose from "mongoose";
 
 const { Schema, model } = mongoose;
 
-const userSchema = new mongoose.Schema({
+const eventSchema = new mongoose.Schema({
+
+
   name: {
     type: String,
     required: true,
-    unique: true,
   },
   image: {
     type: String,
     required: true,
-    unique: true,
   },
+  description: {
+    type: String,
+  },
+  packageId: [{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Package'
+  }],
+  serviceId: [{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Service'
+  }],
+
 });
 
-export default model("Event", userSchema);
+export default model("Event", eventSchema);

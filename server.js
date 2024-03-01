@@ -3,8 +3,10 @@ import "dotenv/config";
 import cors from "cors";
 import cookieParser from "cookie-parser";
 import dbconnect from "./src/config/db.js";
-import { eventRouter } from "./src/routes/eventRouter.js";
-
+import { eventRouter } from "./src/routes/EventRouter.js"
+import { bookingRouter } from "./src/routes/BookingROuter.js";
+import { serviceRouter } from "./src/routes/ServiceRouter.js";
+import { packageRouter } from "./src/routes/PackageRouter.js";
 
 const app = express();
 const port = process.env.PORT;
@@ -18,18 +20,19 @@ app.use(
   })
 );
 app.use(cookieParser());
-app.use(express.static("public"));
+app.use("/images",express.static("images"));
 dbconnect();
 
+app.use("/booking", bookingRouter);
 app.use("/event", eventRouter);
-
-
-app.get('/user/logout', (req, res)=>{
+app.use("/package", packageRouter);
+app.use("/service", serviceRouter);
+app.get('/user/logout', (req, res) => {
   res.clearCookie('access_token')
-  return res.json({message : 'Logged Out!'})
+  return res.json({ message: 'Logged Out!' })
 })
-
 
 app.listen(port, () => {
   console.log(`Server is listenning on port ${port}`);
 });
+
